@@ -8,7 +8,7 @@ const app = express();
 dotenv.config();
 
 //conect to db
-const db = require('./config/database');
+const db = require('./config/database.config');
 db.connect
 
 //Constants
@@ -25,9 +25,9 @@ app.use(express.urlencoded({
 
 //importing routes
 const router = require('./routes');
-const jwt = require('./config/jwt');
-app.use('/api', jwt.validateUser, router.tasks);
-app.use('/users', router.users);
+const jwt = require('./config/jwt.config');
+app.use('/api', jwt.validateUser, router.taskRoute);
+app.use('/users', router.userRoute);
 
 //middlewares
 const middleware = require('./middlewares');

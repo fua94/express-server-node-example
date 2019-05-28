@@ -1,5 +1,5 @@
 const express = require('express');
-const tasks = require('./tasks') ;
-const users = require('./users');
+const taskRoute = require('./tasks.route') ;
+const userRoute = require('./users.route');
 
-module.exports = { tasks, users };
+module.exports = { taskRoute, userRoute };

@@ -1,36 +1,37 @@
-const Task = require('../models/task');
+const Task = require('../models/task.model');
+const User = require('../models/user.model');
 
 exports.index = async (req, res) => {
-    await Task.find()
-        .then(
-            tasks => {
-                res.send(tasks);
-            }
-        ).catch(
-            error => {
-                res.status(412).json({
-                    msg: error.message
-                });
-            }
-        );
+    try{
+        const tasks = await Task.find().populate('author')
+        res.send(tasks)
+    }catch (err) {
+        console.log(err)
+        res.status(412).json({
+            msg: err.message
+        });
+    }
 }
 
 exports.create = async (req, res) => {
-    await Task.create(req.body)
-        .then(
-            result => {
-                res.status(200).json({
-                    status: 'received!',
-                    result
-                });
-            }
-        ).catch(
-            error => {
-                res.status(400).json({
-                    msg: error.message
-                });
-            }
-        );
+    const { user_id, title, description } = req.body
+    try{
+        const user = await User.findById(user_id)
+        const task = await Task.create({
+            title,
+            description,
+            author: user
+        })
+        console.log(task)
+        res.status(200).json({
+            status: 'received!',
+            task
+        });
+    }catch(error){
+        res.status(412).json({
+            msg: error.message
+        })
+    }
 }
 
 exports.delete = async (req, res) => {

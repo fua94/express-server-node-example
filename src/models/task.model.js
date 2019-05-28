@@ -7,7 +7,8 @@ const TaskSchema = new Schema({
     status: {
         type: Boolean,
         default: false
-    }
+    },
+    author: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('tasks', TaskSchema);
